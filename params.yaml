@@ -1,0 +1,47 @@
+base:
+  random_state: 42
+  log_level: INFO
+  test_size: 0.2
+
+data_load:
+  attest_data_csv: /Users/macbookpro/Desktop/my_student_retention_exp/data/raw/attest_data
+  anonymous_data_csv: /Users/macbookpro/Desktop/my_student_retention_exp/data/raw/anonymous_data
+  movement_data_csv: /Users/macbookpro/Desktop/my_student_retention_exp/data/raw/movement_data/Выгрузка посещений 2023 обезличенная.csv
+  static_data_csv: /Users/macbookpro/Desktop/my_student_retention_exp/data/raw/static_data/НоваяВыгрузкаПоступившихС2020.xlsx
+  targets_data_csv: /Users/macbookpro/Desktop/my_student_retention_exp/data/raw/targets_data
+
+featurize:
+  attestation_features: /Users/macbookpro/Desktop/my_student_retention_exp/data/features/attestation_features
+  movement_features: /Users/macbookpro/Desktop/my_student_retention_exp/data/features/movement_features
+  static_features: /Users/macbookpro/Desktop/my_student_retention_exp/data/features/static_features
+
+train_test_split:
+  # train section
+  train_set: 
+    attestation_data_train: /Users/macbookpro/Desktop/my_student_retention_exp/data/train_set/attestation_data_train
+    movement_data_train: /Users/macbookpro/Desktop/my_student_retention_exp/data/train_set/movement_data_train
+    static_data_train: /Users/macbookpro/Desktop/my_student_retention_exp/data/train_set/static_data_train
+  test_set:
+    attestation_data_test: /Users/macbookpro/Desktop/my_student_retention_exp/data/test_set/attestation_data_test
+    movement_data_test: /Users/macbookpro/Desktop/my_student_retention_exp/data/test_set/movement_data_test
+    static_data_test: /Users/macbookpro/Desktop/my_student_retention_exp/data/test_set/static_data_test
+train:
+  target_column: "is_dropout"
+  use_validation: true
+  drop_columns: ['end_date', 'student_id', 'id']
+  cat_features_movement: ['level', 'department', 'education_form', 'spec_code', 'financing', 'edu_year','last_event', 'most_visited']
+  cat_features_attest: ['level', 'department', 'education_form', 'spec_code', 'financing', 'edu_year','last_event']
+  cat_features_static: ['level', 'department', 'education_form', 'spec_code', 'financing', 'edu_year','last_event', 'country', 'enrolled', 'subjects', 'spec_name']
+  catboost_params:
+    iterations: 1000
+    learning_rate: 0.1
+    depth: 6
+    loss_function: "Logloss"
+    eval_metric: "Accuracy"
+    text_features: ['profile', 'events']
+    auto_class_weights: 'Balanced'
+
+model_save_path: 
+    attest_model: /Users/macbookpro/Desktop/my_student_retention_exp/model/attest_model
+    movement_model: /Users/macbookpro/Desktop/my_student_retention_exp/model/movement_model
+    static_model: /Users/macbookpro/Desktop/my_student_retention_exp/model/static_model

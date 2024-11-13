@@ -1,0 +1,13 @@
+joblib
+jupyter
+jupyter_contrib_nbextensions
+matplotlib
+numpy
+pandas
+pytest
+python-box
+pyyaml
+scikit-learn
+scipy
+tqdm
+dvc
